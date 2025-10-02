@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Opdater</h1>
+<form action="#" method="POST" id="snackForm">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="text" hidden id="id">
+    <label for="name">Navn:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="size">Størrelse</label>
+    <input type="text" id="size" name="size" required>
+    <label for="price">Pris</label>
+    <input type="text" id="price" name="price" required>
+    <label for="description">Beskrivelse</label>
+    <input type="text" id="description" name="description" required>
+    <label for="snackImg">Billede:</label>
+    <input type="text" id="snackImg" name="snackImg" required>
+    <button type="submit" id="btn">Gem</button>
+</form>
+<div id="errorMessage"></div>
+
+<div id="message"></div>
+<script type="module" src="../js/edit-snack.js"></script>
+</body>
+</html>
