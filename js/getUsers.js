@@ -47,7 +47,7 @@ async function fetchUsers () {
 }
 
 function createUserNavigate() {
-    location.href="userForm.html"
+    location.href="userCreate.html"
 }
 
     document.getElementById("createButton").addEventListener("click", createUserNavigate)
