@@ -4,9 +4,9 @@ const messageDiv = document.getElementById("message");
 
 function fetchMovie(event) {
     event.preventDefault();
-    const movieID = document.getElementById("inpCode").value
-    const startDate = document.getElementById("startDate").value
-    const endDate = document.getElementById("endDate").value
+    let movieID = document.getElementById("inpCode").value
+    let startDate = document.getElementById("startDate").value
+    let endDate = document.getElementById("endDate").value
 
     const body = {
         startDate: startDate,
@@ -24,11 +24,15 @@ function fetchMovie(event) {
     }).then(movie => {
         messageDiv.textContent = `Filmen "${movie.title}" er gemt i databasen!`;
         messageDiv.style.color = 'green';
+
+       form.reset()
+
     })
         .catch(error => {
             messageDiv.textContent = error.message;
             messageDiv.style.color = 'red';
         });
+
 }
 
 form.addEventListener('submit', fetchMovie)
