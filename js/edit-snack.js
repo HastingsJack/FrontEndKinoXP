@@ -9,14 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
         size: document.getElementById('size'),
         price: document.getElementById('price'),
         description: document.getElementById('description'),
-        img: document.getElementById('img')
+        snackImg: document.getElementById('snackImg')
     };
     data.id.value = snackObject.id;
     data.name.value = snackObject.name;
     data.size.value = snackObject.size;
     data.price.value = snackObject.price;
     data.description.value = snackObject.description;
-    data.img.value = snackObject.snackImg;
+    data.snackImg.value = snackObject.snackImg;
 });
 
 document.getElementById("btn").addEventListener("click", async (event) => {

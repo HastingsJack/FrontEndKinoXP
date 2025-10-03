@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const imgTag = document.createElement("img");
                 imgTag.src = snack.snackImg;
                 cell.appendChild(imgTag);
-                cell.dataset.img = snack.snackImg;
+                cell.dataset.snackImg = snack.snackImg;
                 cell = row.insertCell(cellCount++);
 
                 cell.textContent = snack.name;
@@ -64,7 +64,7 @@ document.addEventListener("click", async (event) => {
         name: event.target.parentElement.parentElement.cells[1].dataset.name,
         size: event.target.parentElement.parentElement.cells[2].dataset.size,
         price: event.target.parentElement.parentElement.cells[3].dataset.price,
-        snackImg: event.target.parentElement.parentElement.cells[0].dataset.img,
+        snackImg: event.target.parentElement.parentElement.cells[0].dataset.snackImg,
         description: event.target.parentElement.parentElement.cells[4].dataset.description
     }
 
