@@ -1,4 +1,4 @@
-import { apiRequest } from "./modules/apiRequest.js";
+import {apiRequest} from "./modules/apiRequest.js";
 
 const STATUS_OK = 200;
 const BUTTON_TYPE_SUBMIT = "submit";
@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 cell.dataset.description = snack.description;
                 cell = row.insertCell(cellCount++);
 
-                cell.innerHTML = `<button type="submit" data-kode="${snack.id}">Opdater</button>`;
+                cell.innerHTML = `<button type="submit" data-id="${snack.id}">Opdater</button>`;
                 cell = row.insertCell(cellCount++);
 
-                cell.innerHTML = `<button type="submit" data-kode="${snack.id}">Slet</button>`;
+                cell.innerHTML = `<button type="submit" data-id="${snack.id}">Slet</button>`;
             });
         }
     } catch (error) {
@@ -53,22 +53,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("click", async (event) => {
     event.preventDefault();
-    if(event.target.type !== BUTTON_TYPE_SUBMIT) return;
-    const snackID = event.target.dataset.kode;
+    if (event.target.type !== BUTTON_TYPE_SUBMIT) return;
 
-    if(localStorage.getItem("snackID") === snackID) localStorage.removeItem("snackID");
-    if(localStorage.getItem("snackObject") !== null) localStorage.removeItem("snackObject");
+    if (localStorage.getItem("snackObject") !== null) localStorage.removeItem("snackObject");
 
-    const snackObject = {
-        id: null,
-        name: event.target.parentElement.parentElement.cells[1].dataset.name,
-        size: event.target.parentElement.parentElement.cells[2].dataset.size,
-        price: event.target.parentElement.parentElement.cells[3].dataset.price,
-        snackImg: event.target.parentElement.parentElement.cells[0].dataset.snackImg,
-        description: event.target.parentElement.parentElement.cells[4].dataset.description
+    if (event.target.dataset.id !== "") {
+        const snackObject = {
+            id: event.target.dataset.id,
+            name: event.target.parentElement.parentElement.cells[1].dataset.name,
+            size: event.target.parentElement.parentElement.cells[2].dataset.size,
+            price: event.target.parentElement.parentElement.cells[3].dataset.price,
+            snackImg: event.target.parentElement.parentElement.cells[0].dataset.snackImg,
+            description: event.target.parentElement.parentElement.cells[4].dataset.description
+        }
+
+        localStorage.setItem("snackObject", JSON.stringify(snackObject));
     }
-
-    localStorage.setItem("snackObject", JSON.stringify(snackObject));
-    localStorage.setItem("snackID", snackID);
-    window.location.href = "edit-snack.html";
+    window.location.href = "handle-snack.html";
 })
