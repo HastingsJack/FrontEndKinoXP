@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/styling.css">
+</head>
+<body>
+<nav class="navbar">
+    <ul>
+        <li><a href="/index.html">Home</a></li>
+    </ul>
+</nav>
+<form id="snackForm">
+    <input type="hidden" id="id" name="id"> <!-- bruges kun til PUT -->
+
+    <label for="name">Navn:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="size">Størrelse:</label>
+    <input type="text" id="size" name="size" required>
+
+    <label for="price">Pris:</label>
+    <input type="text" id="price" name="price" required>
+
+    <label for="description">Beskrivelse:</label>
+    <input type="text" id="description" name="description" required>
+
+    <label for="snackImg">Billede:</label>
+    <input type="text" id="snackImg" name="snackImg" required>
+
+    <button type="submit" id="btn">Gem</button>
+</form>
+
+<div id="errorMessage"></div>
+
+<div id="message"></div>
+<script type="module" src="../js/handle-snack.js"></script>
+</body>
+</html>

@@ -3,16 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+    <link rel="stylesheet" href="/styling.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
 </head>
-<body><h1>Tilføj Film Til Database</h1>
+<body>
+<nav class="navbar">
+    <ul>
+        <li><a href="/index.html">Home</a></li>
+    </ul>
+</nav>
+
+<h1>Tilføj Film Til Database</h1>
   <form id="formMovie">
-      <label for="inpCode">Tast Movie ID:</label>
-      <input type="number" name="movieID" placeholder="eks. 7358" id="inpCode" required>
+      <label for="startDate" align="center">Start Dato</label>
+      <input type="date" id="startDate" required>
+      <label for="endDate" align="center">Slut Dato</label>
+      <input type="date" id="endDate" required>
+      <label for="inpCode" align="center">Movie ID:</label>
+      <input type="number" name="movieID" placeholder="eks. 617126" id="inpCode" required>
     <button type="submit" title="Gem">Opret</button>
   </form>
 <div id="message"></div>
-<div></div>
-<p>Instruktioner</p>
+<div class="instructions-box">
+<p align="center">Instruktioner</p>
 <ul>
     <li>
         Klik på <a href="https://www.themoviedb.org/">https://www.themoviedb.org/</a>
@@ -23,8 +37,12 @@
     <b style="padding-left: 20px">Example:</b>
     <div style="padding-left: 40px">https://www.themoviedb.org/movie/617126-the-fantastic-4-first-steps</div>
     <div style="padding-left: 40px">Kode er 617126</div>
-    <li>Smidt kode ind i input field og tryk opret</li>
+    <li>Tast/kopi kode ind i input field og tryk opret</li>
 </ul>
+</div>
+<nav class="footer">
+        <p>Data provided by The Movie Database (TMDb)</p>
+</nav>
 </body>
 
 <script src="../js/addmovieform.js"></script>
