@@ -42,7 +42,9 @@ async function fetchUsers () {
         const updateButton = document.createElement("updateButton");
         updateButton.textContent = "Update";
         updateButton.addEventListener("click", () => {
-            location.href = `${redirectUrl}/userUpdate.html?id=${user.id}`;
+            const to = new URL('userUpdate.html', window.location.href);
+            to.searchParams.set('id', user.id);
+            location.href = to.toString();
         })
         tdActions.appendChild(updateButton);
 
