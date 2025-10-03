@@ -1,5 +1,6 @@
 const form = document.getElementById("formMovie")
 const messageDiv = document.getElementById("message");
+const URL = "http://localhost:8080/movies/"
 
 function fetchMovie(event) {
     event.preventDefault();
@@ -11,7 +12,7 @@ function fetchMovie(event) {
         startDate: startDate,
         endDate: endDate
     };
-    fetch(`http://localhost:8080/movies/${movieID}`, {
+    fetch(URL + `${movieID}`, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify(body)
