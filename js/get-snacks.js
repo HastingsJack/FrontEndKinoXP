@@ -1,4 +1,5 @@
-import {apiRequest} from "./modules/apiRequest.js";
+import { apiRequest } from "./modules/apiRequest.js";
+
 
 const STATUS_OK = 200;
 const BUTTON_TYPE_SUBMIT = "submit";
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 cell.innerHTML = `<button type="submit" data-id="${snack.id}">Opdater</button>`;
                 cell = row.insertCell(cellCount++);
 
-                cell.innerHTML = `<button type="submit" data-id="${snack.id}">Slet</button>`;
+                cell.innerHTML = `<button type="submit" data-delete="${snack.id}">Slet</button>`;
             });
         }
     } catch (error) {
@@ -56,6 +57,15 @@ document.addEventListener("click", async (event) => {
     if (event.target.type !== BUTTON_TYPE_SUBMIT) return;
 
     if (localStorage.getItem("snackObject") !== null) localStorage.removeItem("snackObject");
+
+    if (event.target.dataset.delete !== "") {
+        await apiRequest(
+            `snacks/${event.target.dataset.delete}`,
+            "DELETE");
+
+        window.location.href = "get-snacks.html"
+        return;
+    }
 
     if (event.target.dataset.id !== "") {
         const snackObject = {

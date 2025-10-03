@@ -1,4 +1,4 @@
-import {apiRequest} from "./modules/apiRequest.js";
+import { apiRequest } from "./modules/apiRequest.js";
 
 const snackObject = JSON.parse(localStorage.getItem("snackObject"));
 document.addEventListener("DOMContentLoaded", () => {
