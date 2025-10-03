@@ -1,7 +1,6 @@
 const form = document.getElementById("formMovie")
 const messageDiv = document.getElementById("message");
 
-
 function fetchMovie(event) {
     event.preventDefault();
     let movieID = document.getElementById("inpCode").value
