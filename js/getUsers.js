@@ -1,6 +1,7 @@
 let tbody = document.querySelector("tbody");
 
 const baseurl = "http://localhost:8080"
+const redirectUrl = "http://localhost:63342/FrontEndKinoXP/html"
 
 console.log("you are in the getUsersScript")
 async function fetchUsers () {
@@ -37,8 +38,15 @@ async function fetchUsers () {
         const tdRole = document.createElement("td");
         tdRole.textContent = user.role ?? ""
 
+        const tdActions = document.createElement("td");
+        const updateButton = document.createElement("updateButton");
+        updateButton.textContent = "Update";
+        updateButton.addEventListener("click", () => {
+            location.href = `${redirectUrl}/userUpdate.html?id=${user.id}`;
+        })
+        tdActions.appendChild(updateButton);
 
-        tr.append(tdID, tdName, tdEmail, tdPassword, tdAge, tdRole);
+        tr.append(tdID, tdName, tdEmail, tdPassword, tdAge, tdRole, tdActions);
         tbody.appendChild(tr);
     }
 

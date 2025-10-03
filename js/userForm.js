@@ -1,112 +1,75 @@
-const baseurl = "http://localhost:8080"
+const baseurl = "http://localhost:8080";
 
+document.addEventListener("DOMContentLoaded", async () => {
+    //loads the fragment into the container
+    const container = document.querySelector("#formContainer");
+    container.innerHTML = await (await fetch("./fragment/userForm.html")).text();
 
-
-//here we load the html of the fragment and return it.
-async function loadFragment(targetSelector, url) {
-    const chosenContaineer = document.getElementById(targetSelector);
-    const response = await fetch(url, {})
-    chosenContaineer.innerHTML= await response.text()
-    return chosenContaineer
-}
-
-//here we figure out where we url we are on, to make a decision about what the form should do.
-function getStateFromUrl() {
-    const parsedParameter = new URLSearchParams(window.location.search)
-    const id = parsedParameter.searchParams.get('id')
-    if (id) return { mode : "update, id: Number(id) }"}
-    return { mode : "create"}
-}
-
-function fillForm(form, data) {
-    for (const [key, value] of Object.entries(data)) {
-        const input = form.elements.namedItem(key);
-        if (!input) continue;
-        if (input.type === "checkbox") {
-            input.checked = Boolean(value);
-        } else {
-            input.value = value ?? "";
-        }
-    }
-}
-
-function formDataToPayload(form) {
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (data.age) data.age = Number(data.age);
-    if (data.role) data.role = String(data.role).toUpperCase();
-    return data;
-}
-
-async function initUserForm() {
-
-    await loadFragment("#formContainer", "./fragment/userForm.html");
-
-
+    //grabbing  the form and mode from url
     const form = document.querySelector("#userForm");
-    const submitButton = form.querySelector("#submitButton");
+    const btn  = form.querySelector("#submitButton");
+    const id   = new URLSearchParams(location.search).get("id");
+    //its for update if url contains a numberid
+    const isUpdate = !!id;
 
-    // detect mode from URL
-    const state = getFormStateFromUrl();
+    // if it is an update we fill out the form
+    if (isUpdate) {
+        btn.textContent = "Update user";
 
+        //fetching existing userdata for fill out
+        const res = await fetch(`${baseurl}/admin/users/${Number(id)}`);
 
-    if (state.mode === "update") {
-        submitButton.textContent = "Update user";
-        try {
+        //message if we couldn't find the user
+        if (!res.ok) return alert("Could not load user");
 
-            const res = await fetch(`${baseurl}/admin/users/${state.id}`);
-            if (!res.ok) throw new Error("Failed to load user");
-            const user = await res.json();
-            fillForm(form, user);
-        } catch (err) {
-            console.error(err);
-            alert("Could not load user data.");
-            return;
+        //converts response to an object
+        const user = await res.json();
+
+        //looping over the key value pairs we recieved of the user object since Object.entries(user) returns an array of key value pairs.
+        for (const [k, v] of Object.entries(user)) {
+            //we find each key value pair's value with the key
+            const el = form.elements.namedItem(k);
+            // if we didnt find a form element we skip
+            if (!el) continue;
+            el.type === "checkbox" ? (el.checked = !!v) : (el.value = v ?? "");
         }
+    //if not update we just change the button text
     } else {
-        submitButton.textContent = "Create user";
+        btn.textContent = "Create user";
     }
 
-
+    //setting the endpoint and contacting it
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        submitButton.disabled = true;
+        btn.disabled = true;
 
         try {
-            const payload = formDataToPayload(form);
+            // Collect + normalize data
+            const data = Object.fromEntries(new FormData(form).entries());
+            if (data.age)  data.age  = Number(data.age);
+            if (data.role) data.role = String(data.role).toUpperCase();
 
-            const url =
-                state.mode === "update"
-                    ? `${baseurl}/admin/update/${state.id}`
-                    : `${baseurl}/admin/create`;
+            //if it isUpdate then we cintact the update endpoint with a put method, and vice versa
+            const url    = isUpdate ? `${baseurl}/admin/update/${Number(id)}` : `${baseurl}/admin/create`;
+            const method = isUpdate ? "PUT" : "POST";
 
-            const method = state.mode === "update" ? "PUT" : "POST";
-
+            //actually submitting our request
             const res = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(data),
             });
 
-            if (!res.ok) {
-                const text = await res.text();
-                throw new Error(text || `Request failed with ${res.status}`);
-            }
+            if (!res.ok) throw new Error(await res.text());
+            await res.json();
 
-            const result = await res.json();
-            console.log(result);
-
-            // back to adminview
-            location.href = "./users.html";
+            //go back to the admin view
+            location.href = "./admin-view-users.html";
         } catch (err) {
             console.error(err);
-            alert("Something went wrong. Check console for details.");
+            alert("Something went wrong.");
         } finally {
-            submitButton.disabled = false;
+            btn.disabled = false;
         }
     });
-}
-
-
-document.addEventListener("DOMContentLoaded", initUserForm);
-
-
+});
