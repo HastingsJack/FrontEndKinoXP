@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!el) continue;
             el.type === "checkbox" ? (el.checked = !!v) : (el.value = v ?? "");
         }
-    //if not update we just change the button text
+        //if not update we just change the button text
     } else {
         btn.textContent = "Create user";
     }

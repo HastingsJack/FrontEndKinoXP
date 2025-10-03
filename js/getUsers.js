@@ -58,8 +58,8 @@ function createUserNavigate() {
     location.href="userCreate.html"
 }
 
-    document.getElementById("createButton").addEventListener("click", createUserNavigate)
+document.getElementById("createButton").addEventListener("click", createUserNavigate)
 
-    document.addEventListener("DOMContentLoaded", () => {
-        fetchUsers();
-    })
+document.addEventListener("DOMContentLoaded", () => {
+    fetchUsers();
+})
