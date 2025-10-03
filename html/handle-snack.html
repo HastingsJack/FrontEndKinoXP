@@ -5,25 +5,30 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Opdater</h1>
-<form action="#" method="POST" id="snackForm">
-    <input type="hidden" name="_method" value="PUT">
-    <input type="text" hidden id="id">
+<form id="snackForm">
+    <input type="hidden" id="id" name="id"> <!-- bruges kun til PUT -->
+
     <label for="name">Navn:</label>
     <input type="text" id="name" name="name" required>
-    <label for="size">Størrelse</label>
+
+    <label for="size">Størrelse:</label>
     <input type="text" id="size" name="size" required>
-    <label for="price">Pris</label>
+
+    <label for="price">Pris:</label>
     <input type="text" id="price" name="price" required>
-    <label for="description">Beskrivelse</label>
+
+    <label for="description">Beskrivelse:</label>
     <input type="text" id="description" name="description" required>
+
     <label for="snackImg">Billede:</label>
     <input type="text" id="snackImg" name="snackImg" required>
+
     <button type="submit" id="btn">Gem</button>
 </form>
+
 <div id="errorMessage"></div>
 
 <div id="message"></div>
-<script type="module" src="../js/edit-snack.js"></script>
+<script type="module" src="../js/handle-snack.js"></script>
 </body>
 </html>
