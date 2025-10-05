@@ -73,10 +73,6 @@ function deleteUserButton(user, tr) {
             method: "DELETE",
         })
 
-        if (!response.ok) {
-            alert('Failed to delete user');
-            return;
-        }
 
         tr.remove();
 
