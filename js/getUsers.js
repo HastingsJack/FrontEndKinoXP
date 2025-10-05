@@ -42,7 +42,7 @@ async function fetchUsers() {
         tdRole.textContent = user.role ?? ""
 
         const tdActions = document.createElement("td");
-        const updateButton = document.createElement("updateButton");
+        const updateButton = document.createElement("button");
         updateButton.type = "button";
         updateButton.textContent = "Update";
         updateButton.addEventListener("click", () => {
