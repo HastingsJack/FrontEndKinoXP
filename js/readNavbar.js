@@ -2,7 +2,7 @@
 
 console.log("you are in navbar script ");
 
-document.addEventListener('DOMContentLoaded', async e => {
+document.addEventListener('DOMContentLoaded', async () => {
     const navbar = document.getElementById("navbarContainer");
     const response = await (await fetch("./fragment/navbar.html")).text();
     console.log(response)
