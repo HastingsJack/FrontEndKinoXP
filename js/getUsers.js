@@ -69,9 +69,9 @@ function deleteUserButton(user, tr) {
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", () => {
         if (!confirm("Are you sure you want to delete this user?")) return;
-        const response = fetch(`${baseurl}/admin/delete/${user.id}`, {
+        fetch(`${baseurl}/admin/delete/${user.id}`, {
             method: "DELETE",
-        })
+        }).then(r => r.json())
 
 
         tr.remove();
