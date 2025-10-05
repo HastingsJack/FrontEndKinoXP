@@ -1,5 +1,10 @@
 //import { apiRequest } from "./modules/apiRequest.js";
 
+// Map to date and time
+const dateMap = new Map();
+
+const dateSelection = document.getElementById("date");
+
 document.addEventListener("DOMContentLoaded", async () => {
     const movieId = 617126;
 
@@ -13,16 +18,41 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const showings = response.data;
 
-    try{
-        const div = document.getElementById("showing")
-        const imgTag = document.createElement("img");
+    try {
+        const movieTitle = document.getElementById("movieTitle");
+        const imgTag = document.getElementById("imgTag");
 
+        // Adds movie title to the page
+        movieTitle.textContent = showings[0].movie.title;
+        // Adds image to the page
+        imgTag.src = showings[0].movie.movieImg;
+        imgTag.style.width = "200px";
+        imgTag.style.height = "200px";
+        imgTag.style.objectFit = "cover"; // beskærer billedet pænt i stedet for at strække det
+
+        // Loops through the showings of a movie
         for (const showing of showings) {
-            imgTag.src = showing.movie.movieImg;
-            div.appendChild(imgTag);
+            // Format date to danish
+            const showingDate = new Date(showing.date).toLocaleDateString("da-DK")
+
+            // Set key to date if it doesn't exist
+            if (!dateMap.has(showingDate)) {
+                dateMap.set(showingDate, []);
+            }
+
+            // Adds time to date.
+            dateMap.get(showingDate).push(showing.startTime);
         }
 
-    }catch (error) {
+        // Loops through the dates and times
+        let optionValue = 1;
+        dateMap.forEach((timesArray, showingDate) => {
+            // Adds date to the dropdown
+            dateSelection.innerHTML += `<option value="${optionValue++}">${showingDate}</option>`;
+        });
+
+
+    } catch (error) {
         const errorMessage = document.getElementById("errorMessage");
         errorMessage.textContent = error.message;
     }
@@ -30,7 +60,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+dateSelection.addEventListener("change", () => {
+    const timeSelection = document.getElementById("time");
+    const date = dateSelection.options[dateSelection.selectedIndex].label;
+
+    dateMap.forEach((timesArray, showingDate) => {
+        if (date === showingDate) {
+            timesArray.forEach(time => {
+                timeSelection.innerHTML += `<option value="${time}">${time.slice(0,5)}</option>`;
+            })
+        }
+    });
+});
+
 const STATUS_NO_CONTENT = 204;
+
 async function apiRequest(url, method = "GET", data = null) {
     const options = {method, headers: {}};
     // our base url is http://localhost:8080/

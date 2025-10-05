@@ -5,11 +5,22 @@
     <title>Showing</title>
 </head>
 <body>
-<h1>Vælg tidspunkt og sæde</h1>
+<h6 id="movieTitle"></h6>
 <!-- Dette er for filmen og tiderne. -->
-<div id="showing">
+<div>
+    <img alt="Movie picture" src="" id="imgTag"><br>
+    <label for="date">Dato:</label><br>
+    <select name="date" id="date">
+        <option value="default">vælg venligst...</option>
+    </select><br>
 
+    <label for="time">Tid:</label><br>
+    <select name="time" id="time">
+        <option value="default">vælg venligst...</option>
+    </select><br>
 
+    <button type="submit">Tilføj proviant</button>
+    <button type="submit">Færdig</button>
 </div>
 
 
