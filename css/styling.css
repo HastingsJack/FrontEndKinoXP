@@ -1,5 +1,9 @@
 /* style.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+
 body {
     margin: 0;
     display: flex;
@@ -8,7 +12,7 @@ body {
     align-items: center;
     background-color: #1e1e1e; /* dark grey */
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     overflow:auto
 }
 
@@ -42,6 +46,8 @@ button {
     background: #aa0217;
     color: white;
     cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 button:hover {
@@ -68,4 +74,59 @@ ul {
     margin: 20px auto;           /* center horizontally */
     box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* subtle shadow */
 }
+
+#movie-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* auto-fill columns, max 4 per row if width allows */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#movie-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+#movie-list li img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+#movie-list li h3 {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.userTable{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userTable th,
+.userTable td {
+    border: 1px solid rgba(221, 221, 221, 0.09);
+    padding: 5px;
+    text-align: center;
+}
+
+.createUserButtonClass{
+    margin: 10px 0;
+
+}
+
+.backButton{
+    align-self: flex-start;
+    margin: 10px;
+}
+
 
