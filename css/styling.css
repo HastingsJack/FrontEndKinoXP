@@ -1,5 +1,9 @@
 /* style.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+
 body {
     margin: 0;
     display: flex;
@@ -8,7 +12,7 @@ body {
     align-items: center;
     background-color: #1e1e1e; /* dark grey */
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     overflow:auto
 }
 
@@ -42,6 +46,8 @@ button {
     background: #aa0217;
     color: white;
     cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 button:hover {
@@ -100,3 +106,22 @@ ul {
     font-size: 1rem;
     color: #333;
 }
+
+.userTable{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userTable th,
+.userTable td {
+    border: 1px solid rgba(221, 221, 221, 0.09);
+    padding: 5px;
+    text-align: center;
+}
+
+.createUserButtonClass{
+    margin: 10px 0;
+
+}
+
+
