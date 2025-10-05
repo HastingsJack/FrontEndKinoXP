@@ -72,6 +72,12 @@ function deleteUserButton(user, tr) {
         const response = fetch(`${baseurl}/admin/delete/${user.id}`, {
             method: "DELETE",
         })
+
+        if (!response.ok) {
+            alert('Failed to delete user');
+            return;
+        }
+
         tr.remove();
 
     })
