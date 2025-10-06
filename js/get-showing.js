@@ -2,6 +2,7 @@
 
 // Map to date and time
 const dateMap = new Map();
+const showings = [];
 
 const dateSelection = document.getElementById("date");
 
@@ -16,7 +17,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const showings = response.data;
+    // I need to use ...await response.data because if i just push await response.data
+    // Showings has a object with and array inside. If i use ... we will receive all the entries
+    // And add them as multiple objects.
+    showings.push(...await response.data);
 
     try {
         const movieTitle = document.getElementById("movieTitle");
@@ -59,7 +63,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-
 dateSelection.addEventListener("change", () => {
     const timeSelection = document.getElementById("time");
     const date = dateSelection.options[dateSelection.selectedIndex].label;
@@ -67,7 +70,7 @@ dateSelection.addEventListener("change", () => {
     dateMap.forEach((timesArray, showingDate) => {
         if (date === showingDate) {
             timesArray.forEach(time => {
-                timeSelection.innerHTML += `<option value="${time}">${time.slice(0,5)}</option>`;
+                timeSelection.innerHTML += `<option value="${time}">${time.slice(0, 5)}</option>`;
             })
         }
     });
