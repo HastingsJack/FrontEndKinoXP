@@ -2,13 +2,54 @@ const showingDropdown = document.getElementById("showing-select")
 const email = document.getElementById("customer-email")
 const customerName = document.getElementById("customer-name")
 const seat = document.getElementById("seat-coords")
+const seatGrid = document.getElementById("seat-grid")
 const submitButton = document.getElementById("order-button")
+const seatButtons = []
+let selectedSeat = "A1"
 
 async function getDataTest(){
     const {status, data} = await apiRequest("showings/upcoming?date=2025-09-20");
     console.log(status);
     console.log(data)
     return data
+}
+
+function onShowingChange(){
+    //changing the seats
+    seatGrid.innerHTML = ""
+    seatButtons.length = 0
+
+    //creating the seats:
+    let columns = 25 //showingDropdown.value.dataset.wholeShowing.screen.seatColumns
+    let rows = 16//showingDropdown.value.dataset.wholeShowing.screen.seatRows
+    for(let i = 0; i <rows ; i++){
+        let rowArray = []
+        const row = document.createElement("tr")
+        const rowletter = String.fromCharCode(65 + i)
+        for(let j = 0; j< columns; j++){
+            const cell = document.createElement("td")
+            const button = document.createElement("button")
+            button.value = rowletter + (j+1)
+            button.textContent = rowletter + (j+1)
+            button.classList.add("seat-button")
+            button.addEventListener("click",() => selectSeat(button.value))
+            cell.appendChild(button)
+            row.appendChild(cell)
+            rowArray.push(button)
+
+        }
+        seatGrid.appendChild(row)
+        seatButtons.push(rowArray)
+    }
+
+    //making the seats taken:
+    for(let ticket of showingDropdown.dataset.wholeShowing.tickets){
+        let seatRow = ticket.seat.charCodeAt(0) - 65
+        let seatColumn = parseInt(ticket.seat.charAt(1), 10)
+        seatButtons[seatRow][seatColumn].value = "Taken"
+        seatButtons[seatRow][seatColumn].textContent = "Taken"
+    }
+
 }
 
 async function orderTicket(){
@@ -43,8 +84,15 @@ function fillDropdown(showings){
         const option = document.createElement("option")
         option.textContent = "Date:" + showing.date + " Time: " + showing.startTime + " Movie: " + showing.movie.title
         option.value = showing.id
+        option.dataset.wholeShowing = showing
         showingDropdown.appendChild(option)
     })
+}
+
+function selectSeat(value){
+    if (value != "Taken"){
+        selectedSeat = value
+    }
 }
 
 
@@ -52,6 +100,7 @@ submitButton.addEventListener("click", (event) => {
     event.preventDefault()
     orderTicket()
 })
+showingDropdown.addEventListener("change", onShowingChange)
 
 
 async function init(){
