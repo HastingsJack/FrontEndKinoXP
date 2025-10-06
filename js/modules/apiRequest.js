@@ -7,6 +7,7 @@ const STATUS_NO_CONTENT = 204;
 From the RestController we need to contact */
 export async function apiRequest(url, method = "GET", data = null) {
     const options = {method, headers: {}};
+
     // our base url is http://localhost:8080/
     const baseUrl = `http://localhost:8080/${url}`;
 
@@ -18,6 +19,7 @@ export async function apiRequest(url, method = "GET", data = null) {
 
     const response = await fetch(baseUrl, options);
 
+    console.log("Når ikke her")
     // Check if response is ok, if not, throw error
     if (!response.ok) {
         const errorMessage = await response.text();

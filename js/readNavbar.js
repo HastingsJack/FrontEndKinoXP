@@ -1,21 +1,8 @@
-
-
-console.log("you are in navbar script ");
-
 document.addEventListener('DOMContentLoaded', async () => {
     const navbar = document.getElementById("navbarContainer");
     const response = await (await fetch("./fragment/navbar.html")).text();
-    console.log(response)
 
-
-
-    navbar.innerHTML = response
-
-    const homeButton = document.getElementById("home")
-    homeButton.addEventListener("click", e => {
-        e.preventDefault()
-        location.href = "./index.html"
-    })
+    navbar.innerHTML = response;
 
     const snackButton = document.getElementById("snacks")
     snackButton.addEventListener("click", e => {
