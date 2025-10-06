@@ -1,14 +1,59 @@
+
+
+import {apiRequest} from "../modules/apiRequest.js";
 const STATUS_NO_CONTENT = 204;
 
+const mainTable = document.getElementById("showing-master-table")
 
-// Method has default value GET
-// Data has default value null. If set it's the data from a form
-/* Url is the endpoint we want to call but only the RequestMapping is added
-From the RestController we need to contact */
-export async function apiRequest(url, method = "GET", data = null) {
+function fillTable(showings){
+
+    let rowCount = showings.length;
+    showings.forEach(showing =>{
+        let cellCount = 0;
+        let row = mainTable.insertRow(-1)
+
+        let cell = row.insertCell(cellCount++)
+        cell.innerHTML = showing.id
+        cell = row.insertCell(cellCount++)
+        cell.innerHTML = showing.price
+        cell = row.insertCell(cellCount++)
+        cell.innerHTML = showing.startTime.toLocaleString()
+        cell = row.insertCell(cellCount++)
+        cell.innerHTML = showing.endTime.toLocaleString()
+
+
+    });
+
+
+
+}
+
+async function getData(){
+    console.log("hello from getData")
+   const {status, data} = await apiRequest("showings/all/dto")
+    console.log("status:" + status)
+    console.log("DATA: " + data)
+    return data
+
+
+}
+
+
+
+async function init() {
+    const showings = await getData();
+    fillTable(showings);
+}
+
+// Call init
+init();
+
+/*
+async function apiRequest2(url, method = "GET", data = null) {
     const options = {method, headers: {}};
     // our base url is http://localhost:8080/
     const baseUrl = `http://localhost:8080/${url}`;
+
 
     // If data has data, we need to set header type to json and stringify data
     if (data) {
@@ -36,5 +81,4 @@ export async function apiRequest(url, method = "GET", data = null) {
         return await response.text();
     }
 }
-
-
+*/

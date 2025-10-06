@@ -79,8 +79,12 @@ document.addEventListener("click", async (event) => {
         }
 
         localStorage.setItem("snackObject", JSON.stringify(snackObject));
+        window.location.href = "handle-snack.html";
+
     }
-    window.location.href = "handle-snack.html";
+    if (event.target.dataset.create !== undefined) {
+        window.location.href = "handle-snack.html";
+    }
 });
 
 async function apiRequest(url, method = "GET", data = null) {
