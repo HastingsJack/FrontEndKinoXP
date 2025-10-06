@@ -1,6 +1,7 @@
 import {apiRequest} from "./modules/apiRequest.js";
 
 const STATUS_BADREQUEST = 400;
+const STATUS_OK = 200;
 const btn = document.getElementById("btn");
 
 btn.addEventListener("click", async (e) => {
@@ -23,5 +24,9 @@ btn.addEventListener("click", async (e) => {
         if (parsedData.password !== null)
             document.getElementById("missingPassword").textContent = parsedData.password;
     }
+    if(response.status === STATUS_OK)
+        window.location.href = "active-films.html"
+
+
 
 });
