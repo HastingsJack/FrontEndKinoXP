@@ -22,10 +22,14 @@ async function loadMovies() {
         for (const movie of data) {
             const li = document.createElement("li");
             li.innerHTML = `
-        <a href="/index.html">
         <img src="${movie.movieImg}" alt="${movie.title}" />
         <h3>${movie.title}</h3>
     `;
+            li.addEventListener("click", () => {
+                if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
+                localStorage.setItem("movieId", movie.id);
+                window.location.href = "get-showings.html";
+            })
             list.appendChild(li);
         }
 
@@ -39,6 +43,10 @@ async function loadMovies() {
 }
 
 document.addEventListener("DOMContentLoaded", loadMovies);
+
+li.addEventListener("click", () => {
+
+})
 
 
 
