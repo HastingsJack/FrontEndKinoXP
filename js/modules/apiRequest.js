@@ -19,11 +19,9 @@ export async function apiRequest(url, method = "GET", data = null) {
 
     const response = await fetch(baseUrl, options);
 
-    console.log("Når ikke her")
     // Check if response is ok, if not, throw error
     if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Fejl ${response.status}: ${errorMessage}`);
+        return {status: response.status, data: await response.text()};
     }
 
     // try to parse response as json, if not, return response as text
