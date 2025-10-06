@@ -1,5 +1,8 @@
 /* style.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
 body {
     margin: 0;
     display: flex;
@@ -8,8 +11,8 @@ body {
     align-items: center;
     background-color: #1e1e1e; /* dark grey */
     color: white;
-    font-family: Arial, sans-serif;
-    overflow:auto
+    font-family: 'Roboto', sans-serif;
+    overflow: auto
 }
 
 h1 {
@@ -24,7 +27,7 @@ form {
     background: #2c2c2c;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 input, button {
@@ -42,6 +45,8 @@ button {
     background: #aa0217;
     color: white;
     cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 button:hover {
@@ -59,14 +64,14 @@ ul {
 }
 
 .instructions-box {
-    background-color: #2c2c2c;   /* dark background */
-    color: #ffffff;              /* white text */
-    border: 2px solid #aa0217;   /* green border */
-    border-radius: 8px;           /* rounded corners */
-    padding: 15px;               /* spacing inside the box */
-    max-width: 600px;            /* optional: limit width */
-    margin: 20px auto;           /* center horizontally */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* subtle shadow */
+    background-color: #2c2c2c; /* dark background */
+    color: #ffffff; /* white text */
+    border: 2px solid #aa0217; /* green border */
+    border-radius: 8px; /* rounded corners */
+    padding: 15px; /* spacing inside the box */
+    max-width: 600px; /* optional: limit width */
+    margin: 20px auto; /* center horizontally */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* subtle shadow */
 }
 
 #movie-list {
@@ -100,3 +105,29 @@ ul {
     font-size: 1rem;
     color: #333;
 }
+
+.userTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userTable th,
+.userTable td {
+    border: 1px solid rgba(221, 221, 221, 0.09);
+    padding: 5px;
+    text-align: center;
+}
+
+.createUserButtonClass {
+    margin: 10px 0;
+
+}
+
+.backButton {
+    align-self: flex-start;
+    margin: 10px;
+}
+
+
+
+

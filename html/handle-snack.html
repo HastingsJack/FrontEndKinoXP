@@ -2,33 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/navbar.css">
-    <link rel="stylesheet" href="/styling.css">
+    <title>Handle snacks</title>
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/styling.css">
 </head>
+<div id="navbarContainer"></div>
+<script src="../js/readNavbar.js"></script>
+
 <body>
-<nav class="navbar">
-    <ul>
-        <li><a href="/index.html">Home</a></li>
-    </ul>
-</nav>
+
+
+
+<button onclick="location.href='get-snacks.html'" class="backButton">Back</button>
+
+
 <form id="snackForm">
     <input type="hidden" id="id" name="id"> <!-- bruges kun til PUT -->
 
     <label for="name">Navn:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name">
 
     <label for="size">Størrelse:</label>
-    <input type="text" id="size" name="size" required>
+    <input type="text" id="size" name="size">
 
     <label for="price">Pris:</label>
-    <input type="text" id="price" name="price" required>
+    <input type="number" id="price" name="price">
 
     <label for="description">Beskrivelse:</label>
-    <input type="text" id="description" name="description" required>
+    <input type="text" id="description" name="description">
 
     <label for="snackImg">Billede:</label>
-    <input type="text" id="snackImg" name="snackImg" required>
+    <input type="text" id="snackImg" name="snackImg">
 
     <button type="submit" id="btn">Gem</button>
 </form>
