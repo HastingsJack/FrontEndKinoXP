@@ -6,7 +6,7 @@ const dateMap = new Map();
 const dateSelection = document.getElementById("date");
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const movieId = 617126;
+    const movieId = localStorage.getItem("movieId");
 
     const response = await apiRequest(`showings?movieId=${movieId}`);
 
