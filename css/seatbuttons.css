@@ -1,0 +1,40 @@
+/* Base seat button style */
+.seat-button {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/SeatSprite.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow:
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black; /* black outline around text */
+}
+
+/* Available (default) */
+.seat-available {
+    filter: grayscale(1) brightness(0.9);
+}
+
+/* Selected — blue tint */
+.seat-selected {
+    filter: grayscale(0) sepia(1) hue-rotate(190deg) saturate(4) brightness(1.1);
+}
+
+/* Taken — red tint */
+.seat-taken {
+    filter: grayscale(0) sepia(1) hue-rotate(-20deg) saturate(5) brightness(0.9);
+}
