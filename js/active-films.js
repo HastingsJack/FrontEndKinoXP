@@ -16,13 +16,10 @@ async function loadMovies() {
 
         const data = await response.json();
 
-
-        const movies = Array.isArray(data) ? data : Array.from(data || [])
-
         const list = document.getElementById("movie-list")
         list.innerHTML = ""
 
-        for (const movie of movies) {
+        for (const movie of data) {
             const li = document.createElement("li");
             li.innerHTML = `
         <a href="/index.html">
@@ -32,7 +29,7 @@ async function loadMovies() {
             list.appendChild(li);
         }
 
-        console.log("Movies fetched:", movies);
+        console.log("Movies fetched:", data);
 
     } catch (error) {
         const errorMessage = document.getElementById("errorMessage");
