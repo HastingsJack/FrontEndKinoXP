@@ -16,23 +16,24 @@ async function loadMovies() {
 
         const data = await response.json();
 
-
-        const movies = Array.isArray(data) ? data : Array.from(data || [])
-
         const list = document.getElementById("movie-list")
         list.innerHTML = ""
 
-        for (const movie of movies) {
+        for (const movie of data) {
             const li = document.createElement("li");
             li.innerHTML = `
-        <a href="/index.html">
         <img src="${movie.movieImg}" alt="${movie.title}" />
         <h3>${movie.title}</h3>
     `;
+            li.addEventListener("click", () => {
+                if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
+                localStorage.setItem("movieId", movie.id);
+                window.location.href = "get-showings.html";
+            })
             list.appendChild(li);
         }
 
-        console.log("Movies fetched:", movies);
+        console.log("Movies fetched:", data);
 
     } catch (error) {
         const errorMessage = document.getElementById("errorMessage");
@@ -42,6 +43,10 @@ async function loadMovies() {
 }
 
 document.addEventListener("DOMContentLoaded", loadMovies);
+
+li.addEventListener("click", () => {
+
+})
 
 
 
