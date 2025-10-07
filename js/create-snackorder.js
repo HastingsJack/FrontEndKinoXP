@@ -19,13 +19,14 @@ async function loadSnacks() {
         const snacks = sortSnacks(snacksdata)
         const table = document.getElementById("snackTable")
         const tbody = table.querySelector("tbody");
+        console.log("Table:", table, "Tbody:", tbody);
 
 
         snacks.forEach(snack => {
             let row = tbody.insertRow();
             let cell = row.insertCell();
             const imgTag = document.createElement("img");
-            imgTag.src = snack.snackImg;
+            imgTag.src = snack.snackImg
             imgTag.style.width = "50px";
             cell.appendChild(imgTag);
 
