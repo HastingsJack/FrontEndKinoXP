@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 const imgTag = document.createElement("img");
                 imgTag.src = snack.snackImg;
+                imgTag.style.width = "50px";
                 cell.appendChild(imgTag);
                 cell.dataset.snackImg = snack.snackImg;
                 cell = row.insertCell(cellCount++);
