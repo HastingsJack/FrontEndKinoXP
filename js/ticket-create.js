@@ -7,7 +7,7 @@ const submitButton = document.getElementById("order-button")
 const seatButtons = []
 let selectedSeat = "A1"
 
-async function getDataTest(){
+async function getData(){
     const {status, data} = await apiRequest("showings/upcoming?date=2025-09-20");
     console.log(status);
     console.log(data)
@@ -16,12 +16,15 @@ async function getDataTest(){
 
 function onShowingChange(){
     //changing the seats
+    console.log("hello from on showing change")
     seatGrid.innerHTML = ""
     seatButtons.length = 0
-
+    const selectedOption = showingDropdown.options[showingDropdown.selectedIndex];
+    console.log("Raw dataset.wholeShowing:", selectedOption.dataset.wholeShowing);
+    const showingData = JSON.parse(selectedOption.dataset.wholeShowing);
     //creating the seats:
-    let columns = 25 //showingDropdown.value.dataset.wholeShowing.screen.seatColumns
-    let rows = 16//showingDropdown.value.dataset.wholeShowing.screen.seatRows
+    let columns = showingData.screen.seatColumns
+    let rows = showingData.screen.seatRows
     for(let i = 0; i <rows ; i++){
         let rowArray = []
         const row = document.createElement("tr")
@@ -29,9 +32,11 @@ function onShowingChange(){
         for(let j = 0; j< columns; j++){
             const cell = document.createElement("td")
             const button = document.createElement("button")
+            button.type = "button"
+            button.classList.add("seat-button")
+            button.classList.add("seat-available")
             button.value = rowletter + (j+1)
             button.textContent = rowletter + (j+1)
-            button.classList.add("seat-button")
             button.addEventListener("click",() => selectSeat(button.value))
             cell.appendChild(button)
             row.appendChild(cell)
@@ -43,13 +48,28 @@ function onShowingChange(){
     }
 
     //making the seats taken:
-    for(let ticket of showingDropdown.dataset.wholeShowing.tickets){
-        let seatRow = ticket.seat.charCodeAt(0) - 65
-        let seatColumn = parseInt(ticket.seat.charAt(1), 10)
-        seatButtons[seatRow][seatColumn].value = "Taken"
-        seatButtons[seatRow][seatColumn].textContent = "Taken"
+    for(let ticket of showingData.tickets){
+        let seatRow
+        let seatColumn
+        [seatRow, seatColumn] = getSeatArrayCoords(ticket.seat)
+        const button = seatButtons[seatRow][seatColumn]
+        if (button) {
+            button.value = "Taken";
+            button.textContent = "Taken";
+            button.classList.remove("seat-available");
+            button.classList.add("seat-taken");
+        } else {
+            console.warn("Button not found at", seatRow, seatColumn);
+        }
     }
 
+}
+
+function getSeatArrayCoords(coord){
+    let seatrow = coord.charCodeAt(0) - 65
+    let seatColumn = parseInt(coord.slice(1), 10) -1
+
+    return [seatrow, seatColumn];
 }
 
 async function orderTicket(){
@@ -84,32 +104,63 @@ function fillDropdown(showings){
         const option = document.createElement("option")
         option.textContent = "Date:" + showing.date + " Time: " + showing.startTime + " Movie: " + showing.movie.title
         option.value = showing.id
-        option.dataset.wholeShowing = showing
+        option.dataset.wholeShowing = JSON.stringify(showing)
         showingDropdown.appendChild(option)
     })
 }
 
 function selectSeat(value){
     if (value != "Taken"){
+
+        //Deselecting the previous seat
+        let seatRow;
+        let seatColumn
+        [seatRow, seatColumn] = getSeatArrayCoords(selectedSeat)
+        let button = seatButtons[seatRow]?.[seatColumn];
+        if (!button) {
+            console.warn("Button not found at", seatRow, seatColumn, "value:", value);
+            return;
+        }
+        if (!button.classList.contains("seat-taken")){
+
+            button.classList.remove("seat-selected")
+            button.classList.add("seat-available")
+        }
+
+        //Selecting the next seat:
+
+        let result = getSeatArrayCoords(value)
+        seatRow = result[0]
+        seatColumn = result[1]
+        button = seatButtons[seatRow]?.[seatColumn];
+        if (!button) {
+            console.warn("Button not found at", seatRow, seatColumn, "value:", value);
+            return;
+        }
+        seatButtons[seatRow][seatColumn].classList.remove("seat-available")
+        seatButtons[seatRow][seatColumn].classList.add("seat-selected")
         selectedSeat = value
+        seat.value = value
     }
 }
 
+
+
+
+
+async function init(){
+    let data = await getData()
+    fillDropdown(data)
+    onShowingChange()
+}
+
+init()
 
 submitButton.addEventListener("click", (event) => {
     event.preventDefault()
     orderTicket()
 })
 showingDropdown.addEventListener("change", onShowingChange)
-
-
-async function init(){
-    let data = await getDataTest()
-    fillDropdown(data)
-}
-
-init()
-
 
 const STATUS_NO_CONTENT = 204;
 
