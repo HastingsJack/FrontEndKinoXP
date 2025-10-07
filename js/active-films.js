@@ -24,6 +24,9 @@ async function loadMovies() {
             li.innerHTML = `
         <img src="${movie.movieImg}" alt="${movie.title}" />
         <h3>${movie.title}</h3>
+        <h8 style="color:black">Aldersgrænse: ${movie.ageLimit} </h8>
+        <h8 style="color:black">Længde: ${movie.movieLength} min </h8>
+        <h8 style="color:black">Genre: ${movie.genres}</h8>
     `;
             li.addEventListener("click", () => {
                 if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
