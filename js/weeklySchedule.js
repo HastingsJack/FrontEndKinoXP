@@ -54,7 +54,6 @@ function buildSShiftElement(shift) {
     a.style.top = `${rect.top}px`
     a.style.height = `${rect.height}px`;
 
-
     const em = document.createElement("em");
     em.className = "shift-employee-name"
     em.textContent = shift.user?.name ?? "ukendt"

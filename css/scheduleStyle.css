@@ -9,6 +9,9 @@
     gap: 16px;
     flex-direction: row;
     max-width: 100%;
+    background: rgba(198, 215, 225, 0.81);
+    align-items: center;
+    justify-content: center;
 }
 
 .day-column {
@@ -20,6 +23,8 @@
     padding: 8px;
     overflow-x: auto;
     height: 100%;
+    width: 200px;
+
 }
 .day-column a {
     background: rgba(178, 209, 234, 0.56);
@@ -44,6 +49,28 @@ ul[data-day]{
     padding: 0;                  /* no padding or it offsets absolute items */
     margin: 0;
     list-style: none;
+}
+
+.schedule-shift {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+
+}
+
+.schedule-shift a {
+    width: 100%;
+}
+
+
+
+.day-body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
 }
 
 
