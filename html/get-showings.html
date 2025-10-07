@@ -5,6 +5,7 @@
     <title>Showing</title>
     <link rel="stylesheet" href="/styling.css">
     <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/seatbuttons.css">
 </head>
 <body>
 <div id="navbarContainer"></div>
@@ -29,7 +30,23 @@
 
 
 <!-- Dette er for sæderne -->
-<div></div>
+<div id="seats-div">
+    <form>
+        <label>Customer Email:</label>
+        <input type="email" id="customer-email">
+        <label>Customer Name:</label>
+        <input type="text" id="customer-name">
+        <label>Seat:</label>
+        <table id="seat-grid">
+
+        </table>
+        <input type="text" id="seat-coords" hidden>
+
+        <button type="submit" id="order-button">Book Ticket</button>
+    </form>
+    <!--for some reason the link on the css file refuses to work so we cache the image like this. -->
+    <img src="../images/SeatSprite.png" alt="Seat sprite" width="32" height="32" hidden>
+</div>
 
 <script type="module" src="../js/get-showing.js"></script>
 </body>

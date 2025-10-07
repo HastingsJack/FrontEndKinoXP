@@ -3,11 +3,23 @@
 // Map to date and time
 const dateMap = new Map();
 const showings = [];
-
 const dateSelection = document.getElementById("date");
 
+//stuff for seat selection:
+const email = document.getElementById("customer-email")
+const customerName = document.getElementById("customer-name")
+const seat = document.getElementById("seat-coords")
+const seatGrid = document.getElementById("seat-grid")
+const submitButton = document.getElementById("order-button")
+const seatButtons = []
+let selectedSeat = "A1"
+const timeSelection = document.getElementById("time")
+
+
 document.addEventListener("DOMContentLoaded", async () => {
-    const movieId = localStorage.getItem("movieId");
+    //const movieId = localStorage.getItem("movieId");
+    //Hardcoding for testing
+    const movieId = 617126;
 
     const response = await apiRequest(`showings?movieId=${movieId}`);
 
@@ -64,7 +76,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 dateSelection.addEventListener("change", () => {
-    const timeSelection = document.getElementById("time");
     const date = dateSelection.options[dateSelection.selectedIndex].label;
 
     dateMap.forEach((timesArray, showingDate) => {
@@ -75,6 +86,10 @@ dateSelection.addEventListener("change", () => {
         }
     });
 });
+
+timeSelection.addEventListener("change", ()=>{
+
+})
 
 const STATUS_NO_CONTENT = 204;
 
