@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         location.href = "./add-movie.html"
     });
 
+    const adminFutureMoviesButton = document.getElementById("futureMovie")
+    adminFutureMoviesButton.addEventListener("click", (e) => {
+        e.preventDefault()
+        location.href = "./future-films.html"
+    });
+
     const logoutButton = document.getElementById("logout")
     logoutButton.addEventListener("click", (e) => {
         e.preventDefault()

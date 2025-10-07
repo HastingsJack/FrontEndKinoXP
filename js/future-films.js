@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080/movies/active"
+const URL = "http://localhost:8080/movies/future"
 
 async function loadMovies() {
     console.log("Fetching movies...")
@@ -31,7 +31,7 @@ async function loadMovies() {
             li.addEventListener("click", () => {
                 if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
                 localStorage.setItem("movieId", movie.id);
-                window.location.href = "get-showings.html";
+                //window.location.href = "get-showings.html";
             })
             list.appendChild(li);
         }
@@ -46,7 +46,3 @@ async function loadMovies() {
 }
 
 document.addEventListener("DOMContentLoaded", loadMovies);
-
-
-
-
