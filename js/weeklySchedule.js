@@ -1,10 +1,37 @@
 const baseurl = "http://localhost:8080";
 
+const DAY_START_HOUR = 9;
+const DAY_END_HOUR = 23;
+
+const TOTAL_MINUTES = (DAY_END_HOUR - DAY_START_HOUR) * 60;
+const COLUMN_HEIGHT = 840;
+const PX_PER_MINUTES = COLUMN_HEIGHT /TOTAL_MINUTES;
+
 console.log("you are in the weeklySchedule script")
 
 const normalizedDays = d => ((d.getDay() + 6) % 7) + 1;
-
 const normalizedTime = t => (typeof t === "string" ? t.slice(0, 5) : "");
+
+function parseTimeToMinutes(hhmm) {
+    const [hour, minute] = hhmm.split(":").map(Number);
+    return hour * 60 + minute;
+}
+
+function computeBlockRect(startHHMM, endHHMM) {
+    const startMin = parseTimeToMinutes(startHHMM);
+    const endMin = parseTimeToMinutes(endHHMM);
+
+    const startFromWindow = Math.max(0, startMin - DAY_START_HOUR * 60);
+    const endFromWindow = Math.min(TOTAL_MINUTES, endMin - DAY_START_HOUR * 60);
+
+    const clampedHeightMin = Math.max(0, endFromWindow - startFromWindow);
+
+    return {
+        top: startFromWindow * PX_PER_MINUTES,
+        height: Math.max(18, clampedHeightMin * PX_PER_MINUTES)
+    }
+
+}
 
 function buildSShiftElement(shift) {
     console.log("you are in the buildSShiftElement");
@@ -13,10 +40,19 @@ function buildSShiftElement(shift) {
 
     const a = document.createElement("a");
     a.href = "#0";
-    a.dataset.start = normalizedTime(shift.startTime)
-    a.dataset.end = normalizedTime(shift.endTime)
+
+    const start = normalizedTime(shift.startTime);
+    const end = normalizedTime(shift.endTime);
+    a.dataset.start = start
+    a.dataset.end = end
+
     a.dataset.content = "shift"
     a.dataset.event = "event-1"
+
+    const rect = computeBlockRect(start, end);
+    a.style.position = "absolute";
+    a.style.top = `${rect.top}px`
+    a.style.height = `${rect.height}px`;
 
 
     const em = document.createElement("em");
