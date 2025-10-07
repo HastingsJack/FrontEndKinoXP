@@ -7,8 +7,6 @@
 <link rel="stylesheet" href="/styling.css">
 </head>
 <body>
-<div id="navbarContainer"></div>
-<script src="./js/readNavbar.js"></script>
 <br>
 <form method="POST" id="loginForm">
     <label for="email">Email</label>
@@ -18,6 +16,7 @@
     <label for="password">Password</label>
     <input type="password" id="password" name="password" placeholder="Password">
     <span id="missingPassword" role="alert"></span><br>
+    <span id="errorMessage"></span>
     <button type="submit" id="btn">Login</button>
 </form>
 

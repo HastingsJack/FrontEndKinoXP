@@ -1,6 +1,5 @@
 const STATUS_NO_CONTENT = 204;
 
-
 // Method has default value GET
 // Data has default value null. If set it's the data from a form
 /* Url is the endpoint we want to call but only the RequestMapping is added
@@ -37,4 +36,13 @@ export async function apiRequest(url, method = "GET", data = null) {
     }
 }
 
+export function readyFormData(form){
+    const plainText = new FormData(form);
+    const plainObject = Object.fromEntries(plainText);
+    return Object.fromEntries(Object.entries(plainObject)
+        .map(([key, value]) => [
+            key,
+            value === "" ? null : value,
+        ]));
+}
 

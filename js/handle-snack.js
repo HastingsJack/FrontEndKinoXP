@@ -1,4 +1,4 @@
-import {apiRequest} from "./modules/apiRequest.js";
+import {apiRequest, readyFormData} from "./modules/apiRequest.js";
 
 const snackObject = JSON.parse(localStorage.getItem("snackObject"));
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,13 +31,8 @@ btn.addEventListener("click", async (event) => {
 
     try {
         const form = document.getElementById("snackForm");
-        const plainText = new FormData(form);
-        const plainObject = Object.fromEntries(plainText);
-        const cleanedObject = Object.fromEntries(Object.entries(plainObject)
-            .map(([key, value]) => [
-                key,
-                value === "" ? null : value,
-            ]));
+        const plainObject = readyFormData(form);
+
         const apiPepare = {url: "", method: ""};
 
         if (snackObject !== null) {
@@ -48,7 +43,7 @@ btn.addEventListener("click", async (event) => {
             apiPepare.url = "snacks";
             apiPepare.method = "POST";
         }
-        const response = await apiRequest(apiPepare.url, apiPepare.method, cleanedObject);
+        const response = await apiRequest(apiPepare.url, apiPepare.method, plainObject);
 
         if (response.status === STATUS_CREATED) {
             alert(`Snack gemt succesfuldt! ${response.data.name}`);
@@ -62,6 +57,8 @@ btn.addEventListener("click", async (event) => {
 
         if (response.status === STATUS_BADREQUEST) {
             const parsedData = JSON.parse(response.data);
+            if(parsedData.error !== null)
+                document.getElementById("errorMessage").textContent = parsedData.error;
             if (parsedData.name !== null)
                 document.getElementById("missingName").textContent = parsedData.name;
             if (parsedData.size !== null)
