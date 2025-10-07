@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<div class="schedule-container">
 <div class="schedule-times">
     <div class="schedule-timeLine">
         <ul>
@@ -25,93 +26,47 @@
         <li><span>20:00</span></li>
         <li><span>21:00</span></li>
         <li><span>22:00</span></li>
+        <li><span>23:00</span></li>
         </ul>
     </div>
 
 </div>
 
-<div class="schedule-container">
-    <ul>
+    <ul class="days">
         <li class="day-column">
             <div class="day-title"><span>Mandag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-
-            </ul>
+            <ul class="day-body" data-day="1"></ul>
         </li>
         <li class="day-column">
             <div class="day-title"><span>Tirsdag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="2"></ul>
         </li>
-
         <li class="day-column">
             <div class="day-title"><span>Onsdag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="3"></ul>
         </li>
         <li class="day-column">
             <div class="day-title"><span>Torsdag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="4"></ul>
         </li>
         <li class="day-column">
             <div class="day-title"><span>Fredag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="5"></ul>
         </li>
         <li class="day-column">
             <div class="day-title"><span>Lørdag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="6"></ul>
         </li>
-
         <li class="day-column">
             <div class="day-title"><span>Søndag</span></div>
-            <ul>
-                <li class="schedule-shift">
-                    <a data-start="09:00" data-end="22:00" data-content="event-circuit" data-event="event-1" href="#0">
-                        <em class="shift-employee-name">EmployeName</em>
-                    </a>
-                </li>
-            </ul>
+            <ul class="day-body" data-day="7"></ul>
         </li>
+    </ul>
 
-
-
-
-
-</ul>
 </div>
+
+
+
 
 <div class="schedule-model">
     <header class='schedule-model-header'>
@@ -129,5 +84,8 @@
         <a href="#0" class="schedule-model-back">Close</a>
     </div>
 </div>
+
+
+<script src="../js/weeklySchedule.js"></script>
 </body>
 </html>

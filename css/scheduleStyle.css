@@ -1,62 +1,34 @@
 /* scheduleStyle.css */
-
 .schedule-container {
     display: flex;
+    justify-content: center;
+
+}
+.days {
+    display: flex;
     gap: 16px;
-    padding: 16px;
-    overflow-x: auto;
+    flex-direction: row;
+    max-width: 100%;
 }
 
 .day-column {
-    min-width: 240px;          /* so columns don’t collapse */
-    background: #2c2c2c;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: #808080;
     border-radius: 8px;
     padding: 8px;
+    overflow-x: auto;
+    height: 100%;
 }
 
 .day-title {
-    font-weight: bold;
-    margin-bottom: 8px;
+    justify-self: center;
+    background: #ffffff;
+    height: 24px;
+    width: 100%;
+    border-radius: 4px;
 }
 
-.day-column > ul {
-    position: relative;
-    padding: 0 16px;
-    display: flex;                 /* events in a row (like your example) */
-    gap: 12px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    list-style: none;
-}
 
-.schedule-shift {
-    flex-shrink: 0;                /* keep on one line */
-    height: 150px;
-    width: 70%;
-    max-width: 300px;
-    background: #aa0217;
-    border-radius: 6px;
-}
-
-.schedule-shift a {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-}
-
-.schedule-times {
-    padding: 16px;
-}
-
-.schedule-timeLine ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.schedule-timeLine li {
-    padding: 4px 0;
-}
+.
