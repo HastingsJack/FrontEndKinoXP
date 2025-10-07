@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/navbar.css">
-    <link rel="stylesheet" href="/styling.css">
+<link rel="stylesheet" href="/navbar.css">
+<link rel="stylesheet" href="/styling.css">
 </head>
 <body>
-<div id="navbarContainer"></div>
-What was the spider doing on the computer?... He was making a web-site!
+<br>
+<form method="POST" id="loginForm">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Email">
+    <span id="missingEmail" role="alert"></span>
 
-<script src="../js/readNavbar.js"></script>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Password">
+    <span id="missingPassword" role="alert"></span><br>
+    <span id="errorMessage"></span>
+    <button type="submit" id="btn">Login</button>
+</form>
 
+<script type="module" src="./js/index.js"></script>
 </body>
 </html>

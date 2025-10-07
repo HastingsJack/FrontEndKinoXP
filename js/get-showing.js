@@ -1,8 +1,9 @@
-//import { apiRequest } from "./modules/apiRequest.js";
+import { apiRequest } from "./modules/apiRequest.js";
 
 // Map to date and time
 const dateMap = new Map();
 const showings = [];
+
 const dateSelection = document.getElementById("date");
 
 //stuff for seat selection:
