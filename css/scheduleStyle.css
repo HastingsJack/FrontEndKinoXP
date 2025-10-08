@@ -4,13 +4,15 @@
     justify-content: center;
     width: 100vw;
     min-width: 100vw;
+    gap: 10px;
 
 }
 
 .schedule-times {
     width: 5vw;
     text-align: center;
-    padding-top: 46px;
+    padding-top: 28px;
+
 }
 
 .schedule-times > ul {
@@ -22,11 +24,11 @@
     list-style: none;
     height: 60px;
     line-height: unset;
+
 }
 
 .days {
     display: flex;
-    gap: 16px;
     flex-direction: row;
     width: 95vw;
     min-width: 95vw;
@@ -34,6 +36,8 @@
     align-items: center;
     justify-content: center;
     padding-inline-start: 0;
+    gap:16px
+
 }
 
 .day-column {
@@ -51,6 +55,7 @@
 .day-column a {
     background: rgba(178, 209, 234, 0.56);
     border-radius: 8px;
+
 }
 
 .day-title {
@@ -59,6 +64,8 @@
     height: 24px;
     width: 100%;
     border-radius: 4px;
+    gap: 16px;
+
 }
 
 ul[data-day]{
@@ -122,8 +129,9 @@ ul[data-day]{
     top: 10vh;
     left: 70vh;
     right: 70vh;
-    bottom: 10vh;
+    bottom: 20vh;
     min-width: 20vh;
+    max-height: 60vh;
     background-color: rgba(136, 136, 136, 0.46);
     filter: drop-shadow(1px 1px 1px #888888);
     border-radius: 10px;
