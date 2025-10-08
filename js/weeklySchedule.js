@@ -120,6 +120,7 @@ function buildSShiftElement(shift) {
     const end = normalizedTime(shift.endTime);
     htmlButtonElement.dataset.start = start
     htmlButtonElement.dataset.end = end
+    htmlButtonElement.dataset.id = shift.id;
 
     htmlButtonElement.dataset.content = "shift"
     htmlButtonElement.dataset.event = "event-1"
@@ -173,6 +174,45 @@ async function loadShifts() {
         alert("kunne ikke hente vagter")
     }
 }
+
+
+async function loadModalForUpdate(id ){
+    console.log("you are in the loadModalForUpdate");
+    try {
+        const response = await fetch(`${baseurl}/workAssignment/shift/${id}`, {mode: "cors"});
+        if (!response.ok) {
+            throw new Error(`${response.status} ${response.statusText}`);
+        }
+        const shifts = await response.json();
+    } catch (err) {
+        console.error(err);
+        alert("kunne ikke hente vagter")
+    }
+
+
+}
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const target = document.querySelector(".schedule-modal-body")
+    if (!target) {
+        return console.error("schedule-modal-body is undefined")
+    }
+    try{
+        const res = await fetch("/html/fragment/workingAssignmentForm.html")
+        if (!res.ok) {
+            throw new Error("failed to fetch workingAssignmentForm");
+        }
+        target.innerHTML = await res.text();
+        const form = document.querySelector("#form-container")
+        if (!form) {
+            return console.error("form is undefined")
+        }
+    }catch(e){
+        console.error(e);
+    }
+})
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("prevWeek").addEventListener("click", () => {

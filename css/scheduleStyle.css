@@ -99,6 +99,10 @@ ul[data-day]{
 
 }
 
+.week-controls {
+    padding-top: 1vh;
+}
+
 /* ---------------------------------- modal -------------------------------------- */
 
 .modal-backdrop {
@@ -110,26 +114,28 @@ ul[data-day]{
     right: 0;
     background-color: rgba(0, 0, 0, 0.34);
     backdrop-filter: blur(3px);
+    margin: 0;
 }
 
 .schedule-modal {
     position: absolute;
-    top: 50px;
-    left: 200px;
-    right: 200px;
-    bottom: 50px;
-    background-color: #888888;
+    top: 10vh;
+    left: 70vh;
+    right: 70vh;
+    bottom: 10vh;
+    min-width: 20vh;
+    background-color: rgba(136, 136, 136, 0.46);
     filter: drop-shadow(1px 1px 1px #888888);
     border-radius: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 20px 100px 20px 100px;
 }
 .schedule-modal-header {
     position: relative;
     width: 100%;
     padding-top: 80px;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
  }
 
 .schedule-modal-close-button {
