@@ -197,37 +197,22 @@ function getSeatArrayCoords(coord){
     return [seatrow, seatColumn];
 }
 
-async function orderTicket(){
-    if (selectedShowing === null){
+function saveAndProceed(){
+    if(selectedShowing === null ){
         return
     }
-    const dto = {
-        id: null,
-        customerEmail: email.value,
-        customerName: customerName.value,
-        seat: seat.value,
-        showing: {
-            id: selectedShowing.id
 
-        }
-    };
-
-    console.log("DTO being sent:", dto);
-
-    try {
-        const response = await apiRequest("tickets", "POST", dto);
-        console.log("Ticket registered:", response);
-        alert("Ticket successfully registered!");
-    } catch (err) {
-        console.error("Error registering ticket:", err);
-        alert("Failed to register ticket.");
-    }
-
+    localStorage.setItem("customerEmail", email.value);
+    localStorage.setItem("customerName", customerName.value);
+    localStorage.setItem("selectedSeat", seat.value)
+    localStorage.setItem("selectedShowingID", selectedShowing.id)
+    window.location.href = "create-snackorder.html";
 }
+
 
 submitButton.addEventListener("click", (event) => {
     event.preventDefault()
-    orderTicket()
+    saveAndProceed()
 })
 
 const STATUS_NO_CONTENT = 204;

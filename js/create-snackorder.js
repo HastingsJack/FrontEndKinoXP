@@ -1,5 +1,9 @@
+
+
 const URL = "http://localhost:8080/snacks"
 const order = new Map();
+const sendButton = document.getElementById("send-order")
+let ticketData = null
 
 async function loadSnacks() {
     console.log("Fetching snacks...")
@@ -102,4 +106,117 @@ function sortSnacks(snacks) {
     });
 }
 
+async function orderTicket(){
+    if (localStorage.getItem("selectedShowingID") === null){
+        console.log("fuck, its null")
+        return
+    }
+    //this submits the ticket to the database:
+    const dto = {
+        id: null,
+        customerEmail: localStorage.getItem("customerEmail"),
+        customerName: localStorage.getItem("customerName"),
+        seat: localStorage.getItem("selectedSeat"),
+        showing: {
+            id: localStorage.getItem("selectedShowingID")
+
+        }
+    };
+
+    console.log("DTO being sent:", dto);
+
+    try {
+        const response = await apiRequest("tickets", "POST", dto);
+        console.log("Ticket registered:", response);
+        alert("Ticket successfully registered!");
+        ticketData = response
+
+    } catch (err) {
+        console.error("Error registering ticket:", err);
+        alert("Failed to register ticket.");
+        ticketData = null
+    }
+
+}
+
+async function orderSnacks(){
+    //this submits the snacks to the database
+    if (ticketData === null){
+        console.log("its null")
+        return
+    }
+    console.log((ticketData.data.id))
+    let requests = 0
+    let successes = 0
+    for (const [snack_id, snack_quantity] of order){
+        const dto = {
+            id: null,
+            quantity: snack_quantity,
+            snack: {
+                id : snack_id
+            },
+            ticket:{
+                id: ticketData.data.id
+            }
+
+        };
+
+        console.log("snack dto being sent:", dto)
+        requests++
+        try {
+            const response = await apiRequest("snackorders", "POST", dto);
+            console.log("Snack order registered:", response);
+            successes++
+
+        } catch (err) {
+            console.error("Error registering ticket:", err);
+            alert("Failed to register ticket.");
+        }
+    }
+
+    if(requests == successes){
+        alert("all snack orders were succesfull!")
+    }
+}
+
+
+
 document.addEventListener("DOMContentLoaded", loadSnacks)
+sendButton.addEventListener("click", onSendButton)
+async function onSendButton(){
+    await orderTicket()
+    orderSnacks()
+}
+const STATUS_NO_CONTENT = 204;
+
+async function apiRequest(url, method = "GET", data = null) {
+    const options = {method, headers: {}};
+    // our base url is http://localhost:8080/
+    const baseUrl = `http://localhost:8080/${url}`;
+
+    // If data has data, we need to set header type to json and stringify data
+    if (data) {
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(data);
+    }
+
+    const response = await fetch(baseUrl, options);
+
+    // Check if response is ok, if not, throw error
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Fejl ${response.status}: ${errorMessage}`);
+    }
+
+    // try to parse response as json, if not, return response as text
+    try {
+        // When we delete, api response has no body. We cant use response.json()
+        if (response.status === STATUS_NO_CONTENT) return {status: response.status, data: null};
+
+        // When we get a body, we can use response.json()
+        const data = await response.json();
+        return {status: response.status, data: data};
+    } catch {
+        return await response.text();
+    }
+}
