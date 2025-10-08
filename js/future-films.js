@@ -27,6 +27,7 @@ async function loadMovies() {
         <h8 style="color:black">Aldersgrænse: ${movie.ageLimit} </h8>
         <h8 style="color:black">Længde: ${movie.movieLength} min </h8>
         <h8 style="color:black">Genre: ${movie.genres}</h8>
+        <h8 style="color:black">Start: ${movie.startDate}</h8>
     `;
             li.addEventListener("click", () => {
                 if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
