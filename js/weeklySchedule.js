@@ -112,28 +112,29 @@ function buildSShiftElement(shift) {
     const li = document.createElement("li");
     li.className = "schedule-shift"
 
-    const a = document.createElement("a");
-    a.href = "#0";
+    const htmlButtonElement = document.createElement("button");
+    htmlButtonElement.type = "button";
+    htmlButtonElement.className = "shift-button";
 
     const start = normalizedTime(shift.startTime);
     const end = normalizedTime(shift.endTime);
-    a.dataset.start = start
-    a.dataset.end = end
+    htmlButtonElement.dataset.start = start
+    htmlButtonElement.dataset.end = end
 
-    a.dataset.content = "shift"
-    a.dataset.event = "event-1"
+    htmlButtonElement.dataset.content = "shift"
+    htmlButtonElement.dataset.event = "event-1"
 
     const rect = computeBlockRect(start, end);
-    a.style.position = "absolute";
-    a.style.top = `${rect.top}px`
-    a.style.height = `${rect.height}px`;
+    htmlButtonElement.style.position = "absolute";
+    htmlButtonElement.style.top = `${rect.top}px`
+    htmlButtonElement.style.height = `${rect.height}px`;
 
     const em = document.createElement("em");
     em.className = "shift-employee-name"
     em.textContent = shift.user?.name ?? "ukendt"
 
-    a.appendChild(em)
-    li.appendChild(a)
+    htmlButtonElement.appendChild(em)
+    li.appendChild(htmlButtonElement)
     return li;
 }
 
@@ -185,4 +186,22 @@ document.addEventListener("DOMContentLoaded", () => {
     loadShiftsForWeek()
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+    const closeButtonElement = document.getElementById("schedule-modal-close-button")
+    const modalElement = document.getElementById("modal-backdrop");
+    closeButtonElement.addEventListener("click", () => {
+        console.log("modal closed")
+        modalElement.style.display = "none";
+    })
+})
 
+document.addEventListener("click", () => {
+    const openModalButtonElements = document.getElementsByClassName("shift-button");
+
+    Array.from(openModalButtonElements).forEach(button => {
+        button.addEventListener("click", () => {
+            const modalElement = document.getElementById("modal-backdrop");
+            modalElement.style.display = "block";
+        })
+    })
+})
