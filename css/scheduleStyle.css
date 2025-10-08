@@ -2,23 +2,45 @@
 .schedule-container {
     display: flex;
     justify-content: center;
+    width: 100vw;
+    min-width: 100vw;
 
 }
+
+.schedule-times {
+    width: 5vw;
+    text-align: center;
+    padding-top: 46px;
+}
+
+.schedule-times > ul {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+}
+
+.schedule-times > ul > li {
+    list-style: none;
+    height: 60px;
+    line-height: unset;
+}
+
 .days {
     display: flex;
     gap: 16px;
     flex-direction: row;
-    max-width: 100%;
-    background: rgba(198, 215, 225, 0.81);
+    width: 95vw;
+    min-width: 95vw;
+    background: rgba(198, 215, 225, 0);
     align-items: center;
     justify-content: center;
+    padding-inline-start: 0;
 }
 
 .day-column {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background: #808080;
+    background: #424242;
     border-radius: 8px;
     padding: 8px;
     overflow-x: auto;
@@ -33,7 +55,7 @@
 
 .day-title {
     justify-self: center;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0);
     height: 24px;
     width: 100%;
     border-radius: 4px;
@@ -42,9 +64,7 @@
 ul[data-day]{
     position: relative;
     height: 840px;              /* 60px per hour for a 14h day (09–23) */
-    border: 1px solid #444;
     border-radius: 6px;
-    background: rgba(192, 38, 38, 0.22);
     box-sizing: border-box;
     padding: 0;                  /* no padding or it offsets absolute items */
     margin: 0;
@@ -64,16 +84,19 @@ ul[data-day]{
     width: 100%;
 }
 
-
-
 .day-body {
     display: flex;
     flex-direction: row;
     width: 100%;
     gap: 8px;
+    background: repeating-linear-gradient(
+            to bottom,
+            #888 0px,
+            #888 1px,
+            transparent 1px,
+            transparent 60px
+    );
+
 }
 
 
-
-
-.
