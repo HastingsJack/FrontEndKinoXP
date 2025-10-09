@@ -313,10 +313,37 @@ document.addEventListener("submit", async (event) => {
         console.log(result);
     } catch (err) {
         console.error(err);
-        alert("kunne ikke opdatere")
     }
 
 
+
+
+})
+
+
+document.addEventListener("click", async (e) => {
+
+    const deleteButton = e.target.closest(".delete-shift-button");
+    if(!deleteButton) return;
+
+    if(!confirm("Er du sikker på at du vil slette denne vagt."))return;
+
+    const deleteUrl = `${baseurl}/workAssignment/delete/${shiftID}`
+
+    console.log("deleting...");
+    try {
+        const deleteResponse = await fetch(deleteUrl, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+        })
+        const json = await deleteResponse.json();
+        console.log(json);
+
+    }catch(err) {
+        console.error(err);
+        alert("kunne ikke slette denne vagt.");
+    }
+    location.reload()
 })
 
 
