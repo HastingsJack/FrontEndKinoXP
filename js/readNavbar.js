@@ -39,4 +39,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         location.href = "./index.html"
     });
 
+    const schedule = document.getElementById("schedule")
+    schedule.addEventListener("click", (e) => {
+        e.preventDefault()
+        localStorage.clear()
+        location.href = "./weekly-schedule.html"
+    });
+
 })

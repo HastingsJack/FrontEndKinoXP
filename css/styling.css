@@ -12,7 +12,10 @@ body {
     background-color: #1e1e1e; /* dark grey */
     color: white;
     font-family: 'Roboto', sans-serif;
-    overflow: auto
+    overflow: auto;
+    margin-top: 2vh;
+    gap: 1vh;
+
 }
 
 h1 {
@@ -75,8 +78,9 @@ ul {
 }
 
 #movie-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* auto-fill columns, max 4 per row if width allows */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     gap: 20px;
     list-style: none;
     padding: 0;
@@ -85,25 +89,47 @@ ul {
 
 #movie-list li {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: rgba(215, 215, 215, 0.05);
     padding: 10px;
     border-radius: 6px;
     text-align: center;
+    min-width: 25vh;
+    min-height: 35vh;
+}
+
+.movie-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #movie-list li img {
     width: 100%;
+    top: 0;
     height: auto;
     border-radius: 6px;
     object-fit: cover;
 }
 
 #movie-list li h3 {
-    margin-top: 10px;
     font-size: 1rem;
-    color: #333;
+    color: #e1e1e1;
+}
+
+#movie-list li h5 {
+    color: #adadad;
+    margin-top: unset;
+    margin-bottom: 10px;
+    padding: unset;
+}
+
+#movie-list li {
+    color: #e1e1e1;
+    display: flex;
+    flex-direction: column;
 }
 
 .userTable {

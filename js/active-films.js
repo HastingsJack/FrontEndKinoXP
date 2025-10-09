@@ -22,14 +22,18 @@ async function loadMovies() {
         for (const movie of data) {
             const li = document.createElement("li");
             li.innerHTML = `
+        <div>
         <img src="${movie.movieImg}" alt="${movie.title}" />
+        </div>
+        <div class="movie-details">
         <h3>${movie.title}</h3>
-        <h8 style="color:black">Aldersgrænse: ${movie.ageLimit} </h8>
-        <h8 style="color:black">Længde: ${movie.movieLength} min </h8>
-        <h8 style="color:black">Genre: ${movie.genres}</h8>
-    `;
+        <h5>Aldersgrænse: ${movie.ageLimit} </h5>
+        <h5>Længde: ${movie.movieLength} min </h5>
+        <h5>Genre: ${movie.genres}</h5>
+        </div>    
+`;
             li.addEventListener("click", () => {
-                if(localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
+                if (localStorage.getItem("movieId") !== null) localStorage.removeItem("movieId");
                 localStorage.setItem("movieId", movie.id);
                 window.location.href = "get-showings.html";
             })
@@ -46,6 +50,8 @@ async function loadMovies() {
 }
 
 document.addEventListener("DOMContentLoaded", loadMovies);
+
+
 
 
 
