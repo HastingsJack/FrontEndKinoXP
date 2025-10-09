@@ -1,0 +1,167 @@
+/* scheduleStyle.css */
+.schedule-container {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    min-width: 100vw;
+    gap: 10px;
+
+}
+
+.schedule-times {
+    width: 5vw;
+    text-align: center;
+    padding-top: 28px;
+
+}
+
+.schedule-times > ul {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+}
+
+.schedule-times > ul > li {
+    list-style: none;
+    height: 60px;
+    line-height: unset;
+
+}
+
+.days {
+    display: flex;
+    flex-direction: row;
+    width: 95vw;
+    min-width: 95vw;
+    background: rgba(198, 215, 225, 0);
+    align-items: center;
+    justify-content: center;
+    padding-inline-start: 0;
+    gap:16px
+
+}
+
+.day-column {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: #424242;
+    border-radius: 8px;
+    padding: 8px;
+    overflow-x: auto;
+    height: 100%;
+    width: 200px;
+
+}
+.day-column a {
+    background: rgba(178, 209, 234, 0.56);
+    border-radius: 8px;
+
+}
+
+.day-title {
+    justify-self: center;
+    background: rgba(255, 255, 255, 0);
+    height: 24px;
+    width: 100%;
+    border-radius: 4px;
+    gap: 16px;
+
+}
+
+ul[data-day]{
+    position: relative;
+    height: 840px;              /* 60px per hour for a 14h day (09–23) */
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 0;                  /* no padding or it offsets absolute items */
+    margin: 0;
+    list-style: none;
+}
+
+.schedule-shift {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+
+}
+
+.schedule-shift a {
+    width: 100%;
+}
+
+.day-body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    background: repeating-linear-gradient(
+            to bottom,
+            #888 0px,
+            #888 1px,
+            transparent 1px,
+            transparent 60px
+    );
+
+}
+
+.week-controls {
+    padding-top: 1vh;
+}
+
+/* ---------------------------------- modal -------------------------------------- */
+
+.modal-backdrop {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(3px);
+    margin: 0;
+}
+
+.schedule-modal {
+    position: absolute;
+    top: 10vh;
+    left: 70vh;
+    right: 70vh;
+    bottom: 20vh;
+    min-width: 20vh;
+    max-height: 60vh;
+    background-color: rgba(136, 136, 136, 0.46);
+    filter: drop-shadow(1px 1px 1px #888888);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 100px 20px 100px;
+}
+.schedule-modal-header {
+    position: relative;
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 20px;
+ }
+
+.schedule-modal-close-button {
+    background: unset;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    position: absolute;
+    right: -70px;
+    top: 10px;
+}
+
+.schedule-modal-close-button:hover {
+    background: unset;
+    filter: invert(100%);
+}
+
+.schedule-modal-headline {
+    font-size: 30px;
+    margin-top: 4px;
+}
