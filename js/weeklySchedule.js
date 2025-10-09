@@ -1,4 +1,5 @@
 const baseurl = "http://localhost:8080";
+let shiftID = ""
 console.log("you are in the weeklySchedule script")
 //this is the range in a day
 const DAY_START_HOUR = 9;
@@ -104,6 +105,7 @@ function computeBlockRect(startHHMM, endHHMM) {
 
 }
 
+
 function buildSShiftElement(shift) {
     console.log("you are in the buildSShiftElement");
     const li = document.createElement("li");
@@ -112,16 +114,13 @@ function buildSShiftElement(shift) {
     const htmlButtonElement = document.createElement("button");
     htmlButtonElement.type = "button";
     htmlButtonElement.className = "shift-button";
+    htmlButtonElement.dataset.shiftId = String(shift.id)
 
-    htmlButtonElement.addEventListener("click", () => {
-        reply_click(this.id)
-    })
 
     const start = normalizedTime(shift.startTime);
     const end = normalizedTime(shift.endTime);
     htmlButtonElement.dataset.start = start
     htmlButtonElement.dataset.end = end
-    htmlButtonElement.dataset.id = shift.id;
 
     htmlButtonElement.dataset.content = "shift"
     htmlButtonElement.dataset.event = "event-1"
@@ -176,18 +175,21 @@ async function loadShifts() {
     }
 }
 
-
+//id is the shift id
 async function loadModalForUpdate(id) {
-    let shifts = "";
+    if (!id) throw new Error("Id på vagt kunne ikke findes")
+    let shift = "";
     let users = "";
-
+    const modalElement = document.getElementById("modal-backdrop");
+    modalElement.style.display = "block";
     console.log("you are in the loadModalForUpdate");
+
     try {
         const response = await fetch(`${baseurl}/workAssignment/shift/${id}`, {mode: "cors"});
         if (!response.ok) {
             throw new Error(`${response.status} ${response.statusText}`);
         }
-        shifts = await response.json();
+        shift = await response.json();
 
 
         const usersResponse = await fetch(`${baseurl}/admin/users`, {mode: "cors"});
@@ -200,35 +202,58 @@ async function loadModalForUpdate(id) {
         console.error(err);
         alert("kunne ikke hente vagter")
     }
+
+    let modalTitle = document.querySelector(".schedule-modal-name");
+    modalTitle.innerText = `Shift: ${shift.user.name}` ;
+
+    let modalDetails = document.querySelector(".schedule-modal-headline");
+
+    function getDayName(dateStr, local) {
+        let date = new Date(dateStr);
+        const lowercase= date.toLocaleDateString(local, {weekday: "long"});
+        const firstLetter = lowercase.charAt(0).toUpperCase()
+        const remainingLetters = lowercase.slice(1)
+        return firstLetter + remainingLetters
+    }
+
+    function getDateNumber(date) {
+        let dateStr = shift.date;
+        return date.substring(8, 10)
+    }
+
+    modalDetails.innerText = `${getDayName(shift.date, `da-DK`)} d. ${getDateNumber(shift.date)},   ${shift.startTime} - ${shift.endTime}` ;
+
+
     const userDropdown = document.querySelector("#assigned-user")
     userDropdown.innerHTML = "";
 
-    users.forEach((u) => {
-        var el = document.createElement("option");
+    users.forEach(u => {
+        const el = document.createElement("option");
         el.textContent = u.name;
         el.value = u.id;
+        if (el.value === shift.user?.id) {
+            el.selected = true;
+        }
         userDropdown.appendChild(el);
     })
 
     const shiftDate = document.querySelector("#shift-date")
-    shiftDate.value = shifts.date;
+    shiftDate.value = shift.date;
+
+
+    const toHHMM = v => (typeof v === "string" ? v.slice(0, 5) : "");
 
     const shiftStartTime = document.querySelector("#start-time")
-    shiftStartTime.value = shifts.startTime;
+    shiftStartTime.value = toHHMM(shift.startTime);
 
     const shiftEndTime = document.querySelector("#end-time")
-    shiftEndTime.value = shifts.endTime;
+    shiftEndTime.value = toHHMM(shift.endTime);
 
 
 }
-let storedClicked_id ="";
+let form = ""
 
-function reply_click(clicked_id)
-{
-    storedClicked_id = clicked_id;
-}
-
-
+// --------------- fetching modal-----------------
 document.addEventListener("DOMContentLoaded", async () => {
     const target = document.querySelector(".schedule-modal-body")
     if (!target) {
@@ -240,17 +265,62 @@ document.addEventListener("DOMContentLoaded", async () => {
             throw new Error("failed to fetch workingAssignmentForm");
         }
         target.innerHTML = await res.text();
-        const form = document.querySelector("#form-container")
+         form = document.querySelector("#work-assignment-form")
         if (!form) {
             return console.error("form is undefined")
         }
     } catch (e) {
         console.error(e);
     }
-    await loadModalForUpdate(storedClicked_id)
+
+
 })
 
 
+
+document.addEventListener("submit", async (event) => {
+    if (!event.target.matches("#work-assignment-form")) return
+    event.preventDefault()
+
+    const raw = Object.fromEntries(new FormData(event.target).entries())
+
+    //this is fixing the fucked up parameters
+    const payload = {
+        startTime: raw['start-time'] ? `${raw['start-time']}:00` : null, // "HH:mm:ss"
+        endTime:   raw['end-time']   ? `${raw['end-time']}:00`   : null,
+        date:      raw['shift-date'] || null,
+
+        user: { id: Number(raw['assigned-user']) }
+
+    };
+
+    const url = `${baseurl}/workAssignment/edit/${shiftID}`
+    console.log(url)
+    console.log(payload)
+
+    try {
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload),
+        })
+        location.reload()
+        if (!response.ok) {
+            throw new Error(`${response.status} ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+    } catch (err) {
+        console.error(err);
+        alert("kunne ikke opdatere")
+    }
+
+
+})
+
+
+// --------------- fetching shifts by week-----------------
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("prevWeek").addEventListener("click", () => {
         currentWeekStart.setDate(currentWeekStart.getDate() - 7);
@@ -262,6 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     loadShiftsForWeek()
 })
+// --------------- closing modal-----------------
 
 document.addEventListener("DOMContentLoaded", () => {
     const closeButtonElement = document.getElementById("schedule-modal-close-button")
@@ -271,14 +342,16 @@ document.addEventListener("DOMContentLoaded", () => {
         modalElement.style.display = "none";
     })
 })
+// --------------- fillinf out modal -----------------
 
 document.addEventListener("click", () => {
     const openModalButtonElements = document.getElementsByClassName("shift-button");
 
     Array.from(openModalButtonElements).forEach(button => {
-        button.addEventListener("click", () => {
-            const modalElement = document.getElementById("modal-backdrop");
-            modalElement.style.display = "block";
+        button.addEventListener("click", (event) => {
+            shiftID = event.target.dataset.shiftId;
+            loadModalForUpdate(shiftID);
         })
     })
+
 })
