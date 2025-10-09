@@ -8,15 +8,14 @@ const DAY_END_HOUR = 23;
 // this if for calculating positioning
 const TOTAL_MINUTES = (DAY_END_HOUR - DAY_START_HOUR) * 60;
 const COLUMN_HEIGHT = 840;
-const PX_PER_MINUTES = COLUMN_HEIGHT /TOTAL_MINUTES;
-
+const PX_PER_MINUTES = COLUMN_HEIGHT / TOTAL_MINUTES;
 
 
 // this is for figuring out the weekly dates
 const toYMD = d => d.toISOString().slice(0, 10);
 
 const startOfWeek = d => {
-    const date= new Date(d);
+    const date = new Date(d);
     const day = (date.getDay() + 6) % 7;
     date.setHours(0, 0, 0, 0)
     date.setDate(date.getDate() - day)
@@ -26,7 +25,7 @@ const startOfWeek = d => {
 const endOfWeek = d => {
     const start = startOfWeek(d);
     const end = new Date(start);
-    end.setDate(start.getDate()+6)
+    end.setDate(start.getDate() + 6)
     return end;
 }
 
@@ -40,12 +39,11 @@ function updateWeekLabel() {
 }
 
 
-
 const normalizedDays = d => ((d.getDay() + 6) % 7) + 1;
 const normalizedTime = t => (typeof t === "string" ? t.slice(0, 5) : "");
 
 
-async function loadShiftsForWeek(){
+async function loadShiftsForWeek() {
     updateWeekLabel();
 
     const start = toYMD(currentWeekStart);
@@ -79,11 +77,10 @@ async function loadShiftsForWeek(){
         }
 
 
-    }catch (error) {
+    } catch (error) {
         alert("kunne ikke hente vagter for denne uge");
     }
 }
-
 
 
 function parseTimeToMinutes(hhmm) {
@@ -115,6 +112,10 @@ function buildSShiftElement(shift) {
     const htmlButtonElement = document.createElement("button");
     htmlButtonElement.type = "button";
     htmlButtonElement.className = "shift-button";
+
+    htmlButtonElement.addEventListener("click", () => {
+        reply_click(this.id)
+    })
 
     const start = normalizedTime(shift.startTime);
     const end = normalizedTime(shift.endTime);
@@ -176,20 +177,55 @@ async function loadShifts() {
 }
 
 
-async function loadModalForUpdate(id ){
+async function loadModalForUpdate(id) {
+    let shifts = "";
+    let users = "";
+
     console.log("you are in the loadModalForUpdate");
     try {
         const response = await fetch(`${baseurl}/workAssignment/shift/${id}`, {mode: "cors"});
         if (!response.ok) {
             throw new Error(`${response.status} ${response.statusText}`);
         }
-        const shifts = await response.json();
+        shifts = await response.json();
+
+
+        const usersResponse = await fetch(`${baseurl}/admin/users`, {mode: "cors"});
+        if (!usersResponse.ok) {
+            throw new Error(`${usersResponse.status} ${usersResponse.statusText}`);
+        }
+        users = await usersResponse.json();
+
     } catch (err) {
         console.error(err);
         alert("kunne ikke hente vagter")
     }
+    const userDropdown = document.querySelector("#assigned-user")
+    userDropdown.innerHTML = "";
+
+    users.forEach((u) => {
+        var el = document.createElement("option");
+        el.textContent = u.name;
+        el.value = u.id;
+        userDropdown.appendChild(el);
+    })
+
+    const shiftDate = document.querySelector("#shift-date")
+    shiftDate.value = shifts.date;
+
+    const shiftStartTime = document.querySelector("#start-time")
+    shiftStartTime.value = shifts.startTime;
+
+    const shiftEndTime = document.querySelector("#end-time")
+    shiftEndTime.value = shifts.endTime;
 
 
+}
+let storedClicked_id ="";
+
+function reply_click(clicked_id)
+{
+    storedClicked_id = clicked_id;
 }
 
 
@@ -198,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!target) {
         return console.error("schedule-modal-body is undefined")
     }
-    try{
+    try {
         const res = await fetch("/html/fragment/workingAssignmentForm.html")
         if (!res.ok) {
             throw new Error("failed to fetch workingAssignmentForm");
@@ -208,9 +244,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!form) {
             return console.error("form is undefined")
         }
-    }catch(e){
+    } catch (e) {
         console.error(e);
     }
+    await loadModalForUpdate(storedClicked_id)
 })
 
 
