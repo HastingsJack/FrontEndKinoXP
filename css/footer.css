@@ -1,8 +1,10 @@
 .footer {
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.2);
     height: 50px;
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    margin-bottom: 0;
+    position: fixed;
+    bottom: 0;
 }
