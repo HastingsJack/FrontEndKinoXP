@@ -29,6 +29,7 @@ function fillTable(data){
     for(let ticket of data){
             const currentRow = document.createElement("tr");
             let cell = document.createElement("td")
+            //adding ticket information
             cell.innerText = ticket.id
             currentRow.appendChild(cell)
             cell = document.createElement("td")
@@ -51,6 +52,24 @@ function fillTable(data){
             currentRow.appendChild(cell)
             cell = document.createElement("td")
             cell.innerText = ticket.seat
+            currentRow.appendChild(cell)
+            //adding an edit button
+            cell = document.createElement("td")
+            const editButton = document.createElement("button")
+            editButton.innerText = "Redigere"
+            editButton.value = ticket.id
+            editButton.classList.add("edit-button")
+            editButton.addEventListener("click", () => editTicket(editButton.value))
+            cell.appendChild(editButton)
+            currentRow.appendChild(cell)
+            //adding a delete button
+            cell = document.createElement("td")
+            const deleteButton = document.createElement("button")
+            deleteButton.innerText = "Slet"
+            deleteButton.value = ticket.id
+            deleteButton.classList.add("edit-button")
+            deleteButton.addEventListener("click", () => deleteTicket(deleteButton.value))
+            cell.appendChild(deleteButton)
             currentRow.appendChild(cell)
             ticketTable.appendChild(currentRow)
     }
@@ -78,6 +97,19 @@ async function changeTicketTable(){
     }else{
         const ticketData = await getTicketDataForShowing(showingSelect.value)
         fillTable(ticketData.data)
+    }
+}
+
+function editTicket(id){
+
+}
+
+async function deleteTicket(id){
+    const deleted = await apiRequest("tickets/" + id, "DELETE", null)
+    if (deleted){
+        await changeTicketTable()
+    }else{
+        console.log("ticket for deletion not found in database")
     }
 }
 
