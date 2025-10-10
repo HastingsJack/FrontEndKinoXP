@@ -136,6 +136,7 @@ async function orderTicket(){
         alert("Failed to register ticket.");
         ticketData = null
     }
+    location.href = "active-films.html"
 
 }
 
