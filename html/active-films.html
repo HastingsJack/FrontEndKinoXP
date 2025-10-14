@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <link rel="stylesheet" href="/styling.css">
-        <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/styling.css">
+    <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="/footer.css">
 </head>
 <div id="navbarContainer"></div>
@@ -14,13 +14,23 @@
 
 <h1>Aktive Film</h1>
 
-<div id="featured-movies"></div>
+<div id="featured-movies" class="featured-movies">
+    <image id="featured-movie-image" class="featured-movie-image"></image>
+</div>
+<div class="carousel-buttons">
+    <button id="next-in-array-button" class="next-in-array-button"><img
+            src="../images/next-icon.svg" alt="next"></button>
+    <button id="last-in-array-button" class="last-in-array-button"><img
+            src="../images/next-icon.svg" alt="prev"></button>
+</div>
 
+<h2>Katalog</h2>
 <div id="errorMessage"></div>
-<ul id = "movie-list"></ul>
-<h3 id = movietitle></h3>
+<ul id="movie-list"></ul>
+<h3 id=movietitle></h3>
 
 <script type="module" src="/active-films.js"></script>
+<script type="module" src="/featuredMovies.js"></script>
 
 </body>
 <nav class="footer">
