@@ -3,7 +3,7 @@ const movieImages = document.querySelector("#featured-movie-image")
 let data = "";
 let index = 0;
 let moviesArray = []
-
+const movieTitle = document.querySelector("#movie-title")
 
 async function loadImages() {
     console.log("Fetching images...")
@@ -21,7 +21,7 @@ async function loadImages() {
 
 
     movieImages.src = data[0].movieImg
-
+    movieTitle.innerText = data[0].title
 }
 
 
@@ -29,14 +29,13 @@ const nextButton = document.querySelector("#next-in-array-button")
 const prevButton = document.querySelector("#last-in-array-button")
 
 function nextInArray() {
-    if (index < data.length) {
-        movieImages.src = data[index++].movieImg
-        movieImages.href = data[index++].id
-    } else if (index === data.length) {
+    if (index === data.length-1) {
         index = 0
-        movieImages.src = data[index].movieImg
-
+    } else {
+        index = index + 1
     }
+    movieImages.src = data[index].movieImg
+    movieTitle.innerText = data[index].title
 }
 
 function lastInArray() {
@@ -46,6 +45,7 @@ function lastInArray() {
         index = index - 1;
     }
     movieImages.src = data[index].movieImg
+    movieTitle.innerText = data[index].title
 }
 
 
