@@ -154,6 +154,74 @@ ul {
     margin: 10px;
 }
 
+.featured-movies {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.featured-movie-image {
+    width: auto;
+    height: 78vh;
+
+}
+.grad1 {
+    position: absolute;
+    align-self: center;
+    z-index: 5;
+    top: 48vh;
+    height: 30vh;
+    width: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgb(0, 0, 0));
+}
+
+
+.carousel-buttons button {
+    background: unset;
+    color: unset;
+    margin: unset;
+}
+
+.carousel-buttons img {
+    width: 4vh;
+    height: 5vh;
+}
+
+.carousel-buttons button:hover {
+    filter: invert(75%);
+}
+
+.next-in-array-button {
+    position: absolute;
+    right: 20vh;
+    top: 45vh;
+
+}
+
+.last-in-array-button {
+    position: absolute;
+    left: 20vh;
+    top: 45vh;
+}
+
+.last-in-array-button img {
+    transform: scale(-1);
+}
+
+.movie-title {
+    z-index: 6;
+    display: flex;
+    position: absolute;
+    top: 65vh;
+    right: 35vh;
+    font-size: 4rem;
+    text-align: right
+}
+
 
 
 
